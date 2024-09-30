@@ -9,4 +9,9 @@ def index(request):
     return render(request, 'main/index.html', context)
 
 def about(request):
-    return HttpResponse("About page.")
+    context: dict ={   
+        'title': "О сайте",
+        'content': "Описание сайта",
+        'text_on_page': "Текст на странице",
+    }
+    return render(request, 'main/about.html', context)
