@@ -22,6 +22,7 @@ class Questions(models.Model):
     text = models.TextField(verbose_name="Текст")
     rating = models.IntegerField(default=0, verbose_name="Рейтинг")
     date = models.DateTimeField( verbose_name="Дата", default=time_now)
+    out_answer = models.BooleanField(default=True, verbose_name="Без ответа")
     
     
     class Meta:

@@ -10,7 +10,17 @@
                 Фильтры
             </button>
 
-            <form action="" method="get" class="dropdown-menu bg-dark" data-bs-theme="dark">
+            <form action="{% url "catalog:index" slug_url %}" method="get" class="dropdown-menu bg-dark" data-bs-theme="dark">
+                <div class="form-check text-white mx-3">
+                    <input class="form-check-input" type="checkbox" name="out_answer" id="flexCheckDefault" value="on"
+                    {% if request.GET.out_answer == 'on'%}checked{% endif %}>
+                    {% if request.GET.q %}
+                        <input type="hidden" name="q" value="{{ request.GET.q }}">
+                    {% endif %}
+                    <label class="form-check-label" for="flexCheckDefault">
+                        Без ответа
+                    </label>
+                </div>
                 <p class="text-white mx-3 mt-3">Сортировать:</p>
                 <div class="form-check text-white mx-3">
                     <input class="form-check-input" type="radio" name="order_by" id="flexRadioDefault1" value="default" checked>
@@ -19,15 +29,17 @@
                     </label>
                 </div>
                 <div class="form-check text-white mx-3">
-                    <input class="form-check-input" type="radio" name="order_by" id="flexRadioDefault2" value="price">
+                    <input class="form-check-input" type="radio" name="order_by" id="flexRadioDefault2" value="rating"    
+                    {% if request.GET.order_by == 'rating'%}checked{% endif %}>
                     <label class="form-check-label" for="flexRadioDefault2">
-                        От дешевых к дорогим
+                        По возрастанию популярности
                     </label>
                 </div>
                 <div class="form-check text-white mx-3">
-                    <input class="form-check-input" type="radio" name="order_by" id="flexRadioDefault3" value="-price">
+                    <input class="form-check-input" type="radio" name="order_by" id="flexRadioDefault3" value="-rating"
+                    {% if request.GET.order_by == '-rating'%}checked{% endif %}>
                     <label class="form-check-label" for="flexRadioDefault3">
-                        От дорогих к дешевым
+                        По убываю популярности
                     </label>
                 </div>
                 <button type="submit" class="btn btn-primary mx-3 mt-3">Применить</button>
@@ -40,10 +52,11 @@
         <div class="col-lg-4 col-md-6 p-4">
             <div class="card border-primary rounded custom-shadow">
                 <div class="card-body">
+                    <p class="card-title">{{ item.out_answer }}</p>
                     <a href="{% url "catalog:question" item.slug %}">
                         <p class="card-title">{{ item.title }}</p>
                     </a>
-                    <p class="card-text">{{ item.text }}</p>
+                    <p class="card-text ">{{ item.text }}</p>
                     <p class="product_id">id: {{ item.display_id }}</p>
                     <p class="product_id">Автор: {{ item.author }}</p>
                     <p class="product_id">Дата: {{ item.date }}</p>
