@@ -4,12 +4,9 @@ from django.http import HttpResponse
 from questions.models import Categories
 def index(request):
     
-    categries = Categories.objects.all()
-    
     context: dict ={   
         'title': "Главная",
         'content': "Содержание главной страницы",
-        'categories': categries
     }
     return render(request, 'main/index.html', context)
 

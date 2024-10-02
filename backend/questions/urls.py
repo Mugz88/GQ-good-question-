@@ -4,6 +4,6 @@ from questions import views
 app_name = 'questions'
 
 urlpatterns = [
-    path('', views.catalog, name='index'),
-    path('question/', views.question, name='question'),
+    path('<slug:category_slug>/', views.catalog, name='index'),
+    path('question/<slug:question_slug>/', views.question, name='question'),
 ]

@@ -1,1 +1,34 @@
-[{"model": "questions.categories", "pk": 2, "fields": {"name": "Фильмы и сериалы", "slug": "filmy-i-serialy"}}, {"model": "questions.categories", "pk": 3, "fields": {"name": "Люди", "slug": "people"}}, {"model": "questions.categories", "pk": 4, "fields": {"name": "Игры", "slug": "games"}}, {"model": "questions.categories", "pk": 5, "fields": {"name": "Прочее", "slug": "other"}}]
+[
+    {
+        "model": "questions.categories",
+        "pk": 2,
+        "fields": {
+            "name": "пїЅпїЅпїЅпїЅпїЅпїЅ пїЅ пїЅпїЅпїЅпїЅпїЅпїЅпїЅ",
+            "slug": "filmy-i-serialy"
+        }
+    },
+    {
+        "model": "questions.categories",
+        "pk": 3,
+        "fields": {
+            "name": "пїЅпїЅпїЅпїЅ",
+            "slug": "people"
+        }
+    },
+    {
+        "model": "questions.categories",
+        "pk": 4,
+        "fields": {
+            "name": "пїЅпїЅпїЅпїЅ",
+            "slug": "games"
+        }
+    },
+    {
+        "model": "questions.categories",
+        "pk": 5,
+        "fields": {
+            "name": "пїЅпїЅпїЅпїЅпїЅпїЅ",
+            "slug": "other"
+        }
+    }
+]

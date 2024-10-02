@@ -1,5 +1,7 @@
 from django.db import models
+from datetime import datetime
 
+time_now = datetime.now()
 class Categories(models.Model):
     name = models.CharField(max_length=50, unique=True, verbose_name="Название")
     slug = models.SlugField(max_length=200, unique=True, blank=True, null=True, verbose_name="Ссылка")
@@ -19,6 +21,7 @@ class Questions(models.Model):
     slug = models.SlugField(max_length=200, unique=True, blank=True, null=True, verbose_name="Ссылка")
     text = models.TextField(verbose_name="Текст")
     rating = models.IntegerField(default=0, verbose_name="Рейтинг")
+    date = models.DateTimeField( verbose_name="Дата", default=time_now)
     
     
     class Meta:
@@ -28,3 +31,6 @@ class Questions(models.Model):
 
     def __str__(self):
         return self.title
+    
+    def display_id(self):
+        return f"{self.id:05}"
