@@ -1,0 +1,1 @@
+[{"model": "questions.categories", "pk": 2, "fields": {"name": "Фильмы и сериалы", "slug": "filmy-i-serialy"}}, {"model": "questions.categories", "pk": 3, "fields": {"name": "Люди", "slug": "people"}}, {"model": "questions.categories", "pk": 4, "fields": {"name": "Игры", "slug": "games"}}, {"model": "questions.categories", "pk": 5, "fields": {"name": "Прочее", "slug": "other"}}]
