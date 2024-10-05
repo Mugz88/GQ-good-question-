@@ -1,6 +1,6 @@
 from django.db import models
 from datetime import datetime
-
+from django.conf import settings
 time_now = datetime.now()
 class Categories(models.Model):
     name = models.CharField(max_length=50, unique=True, verbose_name="Название")
@@ -15,7 +15,7 @@ class Categories(models.Model):
         return self.name
 
 class Questions(models.Model):
-    author = models.ForeignKey("auth.User", on_delete=models.CASCADE, verbose_name="Автор")
+    author = models.ForeignKey(settings.AUTH_USER_MODEL, on_delete=models.CASCADE, verbose_name="Автор")
     category = models.ForeignKey(to=Categories, on_delete=models.CASCADE, verbose_name="Категория")
     title = models.CharField(max_length=200, verbose_name="Заголовок")
     slug = models.SlugField(max_length=200, unique=True, blank=True, null=True, verbose_name="Ссылка")
