@@ -1,6 +1,6 @@
-from django.shortcuts import render
+from django.shortcuts import render, redirect
 
-from users.forms import UserLoginForm
+from users.forms import UserLoginForm, UserRegistrationForm
 from django.contrib import auth
 from django.http import HttpResponseRedirect
 from django.urls import reverse
@@ -28,8 +28,19 @@ def login(request):
 
 
 def registration(request):
+    if request.method == 'POST':
+        form = UserRegistrationForm(data=request.POST)
+        if form.is_valid():
+            form.save()
+            user = form.instance
+            auth.login(request, user)
+            return HttpResponseRedirect(reverse('main:index'))
+    else:
+        form = UserRegistrationForm()
+
     contex = {
-        'title': 'Регистрация'
+        'title': 'Регистрация',
+        'form': form
     }
     return render(request, 'users/registration.html', contex)
 
@@ -42,7 +53,5 @@ def profile(request):
 
 
 def logout(request):
-    contex = {
-        'title': 'Выход'
-    }
-    return render(request, 'users/logout.html', contex)
+    auth.logout(request)
+    return redirect('main:index')
