@@ -28,7 +28,7 @@
                 <p class="card-text">Рейтинг: <strong>{{ question.rating }}</strong></p>
                 <h5 class="card-title">{{ question.title }}</h5>
                 <p class="card-text">{{ question.text   }}.</p>
-                <a href="#" class="btn btn-dark add-to-cart"> Ответить </a>
+                <a href="{% url "otvets:otvet_add" question.slug %}" class="btn btn-dark add-to-cart"> Ответить </a>
             </div>
         </div>
     </div>

@@ -23,6 +23,7 @@ urlpatterns = [
     path('', include('main.urls', namespace='main')),
     path('catalog/', include('questions.urls', namespace='catalog')),
     path('user/', include('users.urls', namespace='user')),
+    path('otvets/', include('otvets.urls', namespace='otvets')),
 ]
 
 if DEBUG:
