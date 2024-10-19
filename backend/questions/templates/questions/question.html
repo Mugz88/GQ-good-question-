@@ -2,34 +2,48 @@
 {% load static %}
 
 {% block content %}
+<div class="container mt-5">
     <div class="container mt-5">
         <div class="card mb-4 custom-shadow">
-            <div class="row">
-                <!-- Миниатюры -->
-                <div class="col-md-4 ">
-                    <p class="product_id mt-3">id: {{ question.display_id }}</p>
-                </div>
-                <!-- Увеличить изображение в модальном окне -->
-                <div class="modal fade" id="imageModal1" tabindex="-1"
-                    aria-labelledby="imageModal1Label" aria-hidden="true">
-                    <div class="modal-dialog modal-lg">
-                        <div class="modal-content">
-                            <div class="modal-header">
-                                <h5 class="modal-title" id="imageModal1Label">Изображение 1</h5>
-                                <button type="button" class="btn-close" data-bs-dismiss="modal"
-                                    aria-label="Закрыть"></button>
-                            </div>
+          <div class="row">
+            <!-- Миниатюры -->
+            <div class="col-md-4 ">
+              <p class="product_id mt-3">id: {{ question.display_id }}</p>
+            </div>
+          </div>
+          <!-- Описание товара -->
+          <div class="card-body">
+            <p class="card-text">Рейтинг: <strong>{{ question.rating }}</strong></p>
+            <h5 class="card-title">{{ question.title }}</h5>
+            <p class="card-text">{{ question.text   }}.</p>
+            <form action="{% url "otvets:otvet_add" question.slug %}" method="post">
+                {% csrf_token %}
+                <textarea name="discription" class="form-control" placeholder="Введите свой ответ"></textarea>
+                <br>
+                <button type="submit" class="btn btn-dark add-to-cart"> Ответить </button>
+              </form>
+            <h4>Ответы:</h4>
+            <ul class="list-group">
+                {% for otvet in otvets %}
+                  <li class="list-group-item">
+                    <div class="media">
+                      <div class="media-body">
+                        <h5 class="mt-0">{{ otvet.discription }}</h5>
+                        <p class="text-muted">Автор: {{ otvet.user.username }}</p>
+                        <p class="text-muted">Дата: {{ otvet.created_timestamp }}</p>
+                        <div class="d-flex justify-content-end">
+                          {% if request.user == otvet.user or request.user.is_superuser %}
+                            <a href="{% url "otvets:otvet_delete" question.slug otvet.id %}" class="btn btn-danger">Удалить</a>
+                          {% endif %}
                         </div>
+                      </div>
                     </div>
-                </div>
-            </div>
-            <!-- Описание товара -->
-            <div class="card-body">
-                <p class="card-text">Рейтинг: <strong>{{ question.rating }}</strong></p>
-                <h5 class="card-title">{{ question.title }}</h5>
-                <p class="card-text">{{ question.text   }}.</p>
-                <a href="{% url "otvets:otvet_add" question.slug %}" class="btn btn-dark add-to-cart"> Ответить </a>
-            </div>
+                  </li>
+                {% empty %}
+                  <li class="list-group-item">Нет ответов</li>
+                {% endfor %}
+              </ul>
+          </div>
         </div>
-    </div>
+      </div>
 {% endblock content %}

@@ -2,6 +2,7 @@ from django.shortcuts import render
 
 from questions.models import Questions
 from questions.utils import q_search
+from otvets.models import Otvets
 
 def catalog(request, category_slug=None):
     
@@ -32,10 +33,12 @@ def catalog(request, category_slug=None):
 
 def question(request, question_slug):
     question = Questions.objects.get(slug=question_slug)
-    
+    answers = Otvets.objects.filter(question=question)
+
     context: dict = {
         'title': question.title,
-        'question': question
+        'question': question,
+        'otvets': answers
     }
-    
+
     return render(request, 'questions/question.html', context=context)
