@@ -8,6 +8,30 @@
 
 {% block content %}
     <h1 class="mt-5 pt-5"><strong>{{ content }}</strong></h1>
+    {% for item in questions %}
+    <!-- Карта товара -->
+    <div class="col-lg-10 col-md-6 p-4">
+        <div class="card border-primary rounded custom-shadow">
+            <div class="card-body">
+                <p class="card-title">{{ item.out_answer }}</p>
+                <a href="{% url "catalog:question" item.slug %}">
+                    <p class="card-title">{{ item.title }}</p>
+                </a>
+                <p class="card-text ">{{ item.text }}</p>
+                <p class="product_id">id: {{ item.display_id }}</p>
+                <p class="product_id">Автор: {{ item.author }}</p>
+                <p class="product_id">Дата: {{ item.date }}</p>
+                <div class="d-flex justify-content-between">
+                    <p><strong>Рейтинг: {{ item.rating }}</strong></p>
+                    <a href="{% url "catalog:question" item.slug %}" class="btn add-to-cart">
+                        <img class="mx-1" src="{% static "deps/icons/otvet.svg" %}" alt="Catalog Icon"
+                            width="32" height="32">
+                    </a>
+                </div>
+            </div>
+        </div>
+    </div>
+    {% endfor %}
 {% endblock content %}
 
 {% block footer %}

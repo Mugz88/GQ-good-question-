@@ -102,28 +102,40 @@
                         <span id="goods-in-cart-count">Спросить</span>
                     </button>
                 </div>
-                <!-- Разметка модального окна корзины -->
+                <!-- Разметка модального окна создания вопроса -->
                 <div class="modal fade" id="exampleModal" tabindex="-1" aria-labelledby="exampleModalLabel"
                     aria-hidden="true">
                     <div class="modal-dialog modal-dialog-scrollable">
                         <div class="modal-content">
-                            <div class="modal-header">
-                                <button type="button" class="btn-close" data-bs-dismiss="modal"
-                                    aria-label="Close"></button>
-                            </div>
-                            <div class="modal-body">
-                                <h3 class="text-center mb-4">Корзина</h3>
-                                <div class="container" id="cart-items-container">
-                                    <!-- Разметка корзины -->
-                                        {% include "otvets/includes/included_otvet.html" %}
-                                    <!-- Закончилась разметка корзины -->
-                                </div>
-                                <a class="btn btn-dark" href="orders/create_order.html">
-                                    Оформить заказ
-                                </a>
-                            </div>
+                          <div class="modal-header">
+                            <h5 class="modal-title" id="new-question-modal-label">Задать новый вопрос</h5>
+                            <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+                          </div>
+                          <div class="modal-body">
+                            <form action="{% url "questions:question_add" %}" method="post">
+                                {% csrf_token %}
+                              <div class="mb-3">
+                                <label for="title" class="form-label">Заголовок вопроса</label>
+                                <input type="text" class="form-control" id="title" name="title" placeholder="Введите заголовок вопроса">
+                              </div>
+                              <div class="mb-3">
+                                <label for="text" class="form-label">Текст вопроса</label>
+                                <textarea class="form-control" id="text" name="text" placeholder="Введите текст вопроса"></textarea>
+                              </div>
+                              <div class="mb-3">
+                                <label for="category" class="form-label">Категория вопроса</label>
+                                <select class="form-select" id="category" name="category">
+                                  <option value="">Выберите категорию</option>
+                                  {% for category in categories %}
+                                    <option value="{{ category.id }}">{{ category.name }}</option>
+                                  {% endfor %}
+                                </select>
+                              </div>
+                              <button type="submit" class="btn btn-primary">Задать вопрос</button>
+                            </form>
+                          </div>
                         </div>
-                    </div>
+                      </div>
                 </div>
                 <!-- Закончилась разметка модального окна -->
             </div>

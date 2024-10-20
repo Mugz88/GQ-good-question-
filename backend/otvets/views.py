@@ -15,5 +15,8 @@ def otvet_add(request, question_slug):
 
 def otvet_change(request, otvet_id, question_slug):
     ''''''
-def otvet_delete(request, otvet_id, question_slug):
-    ''''''
+def otvet_delete(request, otvet_id):
+    otvet = Otvets.objects.get(id=otvet_id)
+    if request.user == otvet.user:
+        otvet.delete()
+    return redirect(request.META['HTTP_REFERER'])

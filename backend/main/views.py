@@ -2,11 +2,13 @@ from django.shortcuts import render
 from django.http import HttpResponse
 
 from questions.models import Categories
+from questions.models import Questions
 def index(request):
-    
+    questions = Questions.objects.all().order_by('-date')
     context: dict ={   
         'title': "Главная",
         'content': "Содержание главной страницы",
+        'questions': questions,
     }
     return render(request, 'main/index.html', context)
 

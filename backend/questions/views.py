@@ -1,8 +1,12 @@
-from django.shortcuts import render
+from django.shortcuts import render, redirect
 
-from questions.models import Questions
+from questions.models import Questions, Categories
 from questions.utils import q_search
 from otvets.models import Otvets
+
+from django.contrib.auth.decorators import login_required 
+from django.utils.text import slugify
+from unidecode import unidecode
 
 def catalog(request, category_slug=None):
     
@@ -42,3 +46,17 @@ def question(request, question_slug):
     }
 
     return render(request, 'questions/question.html', context=context)
+
+@login_required
+def question_add(request):
+    if request.method == 'POST':
+        title = request.POST.get('title')
+        text = request.POST.get('text')
+        category_id = request.POST.get('category')
+        if title and text and category_id:
+            category = Categories.objects.get(id=category_id)
+            slug = slugify(unidecode(title))
+            Questions.objects.create(title=title, text=text, category=category, author=request.user, slug=slug)
+        else:
+            pass
+        return redirect(request.META['HTTP_REFERER'])
