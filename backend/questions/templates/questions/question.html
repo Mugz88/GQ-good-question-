@@ -10,18 +10,41 @@
             <div class="col-md-4 ">
               <p class="product_id mt-3">id: {{ question.display_id }}</p>
             </div>
+            <div class="col-md-4 text-right">
+                <p class="product_id mt-3">Дата: {{ question.date }}</p>
           </div>
           <!-- Описание товара -->
           <div class="card-body">
-            <p class="card-text">Рейтинг: <strong>{{ question.rating }}</strong></p>
-            <h5 class="card-title">{{ question.title }}</h5>
-            <p class="card-text">{{ question.text   }}.</p>
-            <form action="{% url "otvets:otvet_add" question.slug %}" method="post">
-                {% csrf_token %}
-                <textarea name="discription" class="form-control" placeholder="Введите свой ответ"></textarea>
-                <br>
-                <button type="submit" class="btn btn-dark add-to-cart"> Ответить </button>
-              </form>
+            <div class="card mb-3 text-bg-light shadow-lg">
+                <div class="card-header">
+                  <h5 class="card-title">{{ question.title }}</h5>
+                </div>
+                <div class="card-body">
+                  <p class="card-text">{{ question.text }}</p>
+                </div>
+                <div class="card-footer">
+                  <div class="row">
+                    <div class="col-md-6">
+                      <p class="card-text">Автор: <strong>{{ question.author }}</strong></p>
+                    </div>
+                    <div class="col-md-6 text-right">
+                      <p class="card-text">Рейтинг: <strong>{{ question.rating }}</strong></p>
+                    </div>
+                  </div>
+                    <form action="{% url "otvets:otvet_add" question.slug %}" method="post">
+                        {% csrf_token %}
+                        <div class="form-group">
+                        <textarea name="discription" class="form-control" placeholder="Введите свой ответ" rows="3"></textarea>
+                        </div>
+                        <div class="d-flex justify-content-between">
+                            <button type="submit" class="btn btn-dark mt-2">Ответить</button>
+                            {% if request.user == question.author or request.user.is_superuser %}
+                              <a href="{% url "questions:question_delete" question.id %}" class="btn btn-danger mt-2">Удалить</a>
+                            {% endif %}
+                        </div>
+                    </form>
+                </div>
+              </div>
             <h4>Ответы:</h4>
             <ul class="list-group">
                 {% for otvet in otvets %}
@@ -33,7 +56,7 @@
                         <p class="text-muted">Дата: {{ otvet.created_timestamp }}</p>
                         <div class="d-flex justify-content-end">
                           {% if request.user == otvet.user or request.user.is_superuser %}
-                            <a href="{% url "otvets:otvet_delete" question.slug otvet.id %}" class="btn btn-danger">Удалить</a>
+                            <a href="{% url "otvets:otvet_delete" otvet.id %}" class="btn btn-danger">Удалить</a>
                           {% endif %}
                         </div>
                       </div>

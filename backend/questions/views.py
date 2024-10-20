@@ -1,4 +1,5 @@
 from django.shortcuts import render, redirect
+from django.urls import reverse
 
 from questions.models import Questions, Categories
 from questions.utils import q_search
@@ -60,3 +61,8 @@ def question_add(request):
         else:
             pass
         return redirect(request.META['HTTP_REFERER'])
+def question_delete(request, question_id):
+    question = Questions.objects.get(id=question_id)
+    if request.user == question.author:
+        question.delete()
+    return redirect(reverse('main:index'))

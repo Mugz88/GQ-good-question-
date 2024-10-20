@@ -8,4 +8,5 @@ urlpatterns = [
     path('search/', views.catalog, name='search'),
     path('<slug:category_slug>/', views.catalog, name='index'),
     path('question/<slug:question_slug>/', views.question, name='question'),
+    path('question_delete/<int:question_id>/', views.question_delete, name='question_delete'),
 ]

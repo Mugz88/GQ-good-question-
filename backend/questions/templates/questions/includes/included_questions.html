@@ -1,6 +1,9 @@
 {% load static %}
+{% load question_tags %}
 
-<!-- Разметку поменять на ответы!!!!!! -->
+{% user_questions request as questions %}
+
+<!-- Разметка корзины -->
 <div class="card mb-3 text-bg-light shadow-lg">
     <div class="card-header">
       <h5 class="card-title">Вопросы</h5>
@@ -9,7 +12,7 @@
       {% if questions %}
         {% for question in questions %}
           <li class="list-group-item">
-            <a href="{% url 'otvets:otvet_detail' question.id %}">{{ question.title }}</a>
+            <a href="{% url 'questions:question' question.slug %}">{{ question.title }}</a>
           </li>
         {% endfor %}
       {% else %}
