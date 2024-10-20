@@ -1,15 +1,27 @@
 {% load static %}
+{% load otvets_tags %}
 
-<!-- Разметку поменять на ответы!!!!!! -->
+{% user_otvets request as item %}
+
+<!-- Разметка корзины -->
 <div class="card mb-3 text-bg-light shadow-lg">
     <div class="card-header">
-      <h5 class="card-title">Вопросы</h5>
+      <h5 class="card-title">Вопросы и ответы</h5>
     </div>
     <ul class="list-group list-group-flush" id="questions-list">
-      {% if questions %}
-        {% for question in questions %}
+      {% if item.questions %}
+        {% for question in item.questions %}
           <li class="list-group-item">
-            <a href="{% url 'otvets:otvet_detail' question.id %}">{{ question.title }}</a>
+            <a href="{% url 'questions:question' question.slug %}">{{ question.title }}</a>
+            <ul class="list-group list-group-flush mt-2">
+              {% for otvet in item.otvets %}
+                {% if otvet.question == question %}
+                  <li class="list-group-item">
+                    {{ otvet.discription }}
+                  </li>
+                {% endif %}
+              {% endfor %}
+            </ul>
           </li>
         {% endfor %}
       {% else %}
@@ -18,4 +30,4 @@
         </li>
       {% endif %}
     </ul>
-</div>    
+  </div>
